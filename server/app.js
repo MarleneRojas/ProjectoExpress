@@ -3,16 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+//definicion de rutas 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+//creando una instancia de express
 var app = express();
 
 // view engine setup
+//configura el motor de plantillas 
+//1. Establecer donde estaran las plantillas 
+//(vistas -> views)
+//app.set ("<nombre de la variable>",<valor>)
 app.set('views', path.join(__dirname, 'views'));
+//Establezco que motor precargao usara 
 app.set('view engine', 'hbs');
-
+//Establesco Middelware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,5 +42,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+// exponemos el codigo
 module.exports = app;
+
+
+
