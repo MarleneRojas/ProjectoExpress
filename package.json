@@ -5,14 +5,9 @@
   "scripts": {
     "start": "node ./server/bin/www",
     "dev": "nodemon --exec babel-node ./server/bin/www",
-    "devc": "NODE_ENV=development && webpack serve --config ./webpack.dev.config.js --mode development",
     "devb": "babel-watch ./server/bin/www",
-    "cleans": "rm -rf dist",
-    "cleanc": "rm -f bundle.js ./stylesheets/app.css",
-    "b:s": "npm run cleans && babel ./server --out-dir dist --copy-files",
-    "b:c": "npm run cleanc && webpack --config ./webpack.config.js --mode production",
-    "itgam": "ls",
-    "build": "npm run b:c && npm run b:s"
+    "build": "",
+    "itgam": "ls"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
@@ -55,7 +50,6 @@
     "mini-css-extract-plugin": "^1.6.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.4.1",
-    "style-loader": "^3.3.1",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^4.11.0"
   }
