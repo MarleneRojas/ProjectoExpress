@@ -3,8 +3,10 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../server/app');
+// ES5 👇
+// var app = require('../app');
+// ES6 👇
+import app from "../app"
 var debug = require('debug')('projnotes2022b:server');
 var http = require('http');
 
@@ -19,6 +21,8 @@ app.set('port', port);
  * Create HTTP server.
  */
 
+// app es una funcion de tipo middleware (codigo intermediario)
+// (req, res) =>{ ...res.send("algo") }
 var server = http.createServer(app);
 
 /**
@@ -59,7 +63,8 @@ function onError(error) {
   }
 
   var bind = typeof port === 'string'
-    ? 'Pipe ' + port
+    // ? 'Pipe ' + port
+    ? `Pipe ${port}`
     : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
@@ -81,13 +86,13 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() { //servidor en modo onListening
+function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string' //pregunta si bin es string
+  var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  let{port}=addr
-  console.log('Listening at http://localhost: ${port}'); //Listening  = le dice al servidor cuando ya estes escuchando!!!
-  
+  // Desestrecuturando port de addr
+  let {port} = addr
+  console.log(`Listening at http://localhost:${port}`);
 }
