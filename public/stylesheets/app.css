@@ -1,10 +1,10 @@
-h1{
-  color: teal;
+h1 {
+  color: rgb(218, 92, 46);
 }
 body{
   padding: 50px;
   font: "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: mistyrose;
+  background-color: rgb(198, 238, 172);
 }
 
 a{
