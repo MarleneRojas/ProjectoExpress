@@ -28,9 +28,14 @@ import debug from './services/debugLogger';
 
 // Importando enrutador
 import router from './routes/router';
-// Recuperar el modo de ejecución de la app
-const nodeEnv = process.env.NODE_ENV || 'development';
+// Importando los valores de entorno
+import configKeys from './config/configKeys';
+// Importando odm
+import MongooseOdm from './config/odm';
 
+// Recuperar el modo de ejecución de la app
+// const nodeEnv = process.env.NODE_ENV || 'development';
+const nodeEnv = configKeys.env;
 // Creando una instancia de express
 const app = express();
 
@@ -63,10 +68,27 @@ if (nodeEnv === 'development') {
   debug('✒ Ejecutando en modo de producción 🏭');
 }
 
+// Realizando la conexion a la base de datos
+// Creando una instancia a la conexion de la DB
+const mongooseODM = new MongooseOdm(configKeys.mongoUrl);
+// Ejecutar la conexion a la BD
+// Crear una IIFE para crear un ambito asincrono
+// Que me permita usar async await
+(async () => {
+  // Ejecutamos le metodo de conexion 
+  const connectionResult = await mongooseODM.connect();
+  // Checamos si hay error 
+  if (connectionResult) {
+  // Si conecto correctamente a la base de datos
+  logger.info('✅ Conexion a la BD exitosa 🎌');
+} else {
+  logger.error('🥀 No se conecto a la base de dato');
+}
+})();
 // view engine setup
 // Configura el motor de plantillas
 configTemplateEngine(app);
-
+:
 // Establezco Middelware
 app.use(morgan('dev', { stream: logger.stream }));
 // Middleware para parsear a json la peticion

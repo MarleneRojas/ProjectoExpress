@@ -1,10 +1,10 @@
-//Importamos la dependencia de dotEnv
+// Importamos la dependencia de dotEnv
 import dotEnv from 'dotenv';
 
-//cargar las variables de entorno
+// Cargar las variables de entorno
 dotEnv.config();
 
-//Creando un objeto de configuracion
+// Creando un objeto de configuracion
 const defaultConfig = {
   port: process.env.port || 3000,
   appVersion: process.env.APP_VERSION,
@@ -13,7 +13,7 @@ const defaultConfig = {
 // Crear una configuracion para desarrollo
 const devConfig = {
   env: 'develoment',
-  mongoUrl: 'local url',
+  mongoUrl: process.env.DEV_DATABASE_URL,
   debug: process.env.DEBUG,
 };
 
@@ -23,7 +23,7 @@ const prodConfig = {
   mongoUrl: 'cloud url',
 };
 
-//Funcion que dado en el entorno de ejecucion
+// Funcion que dado en el entorno de ejecucion
 // nos retorne el objeto de configuracion adecuado
 function envConfig(env) {
   switch (env) {
