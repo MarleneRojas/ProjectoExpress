@@ -20,17 +20,37 @@ const showAddProjectForm = (req, res) => {
 // POST "/project/add"
 // POST "/project/create"
 const addProject = (req, res) => {
+  // Rescatando la info del fornmulario
+  const { validData, errorData: error } = req;
+  let project = {};
+  // objeto tendra datos para servir en la plantilla en las mostrar en interfaz grafica los errores
+  let errorModel = {};
   // Desesctructurando y renombrando error de datos
-  const { errorData: error } = req;
   // Verificando si hay error de validación
   if (error) {
-    res.status(200).json(error);
+    // Rescatar los datos del formulario
+    // que fallaron en la validacion
+    project = error.value;
+    // Quiero generrar un objeto que contenga
+    // los campos con error y susu errores
+    errorModel = error.inner.reduce((prev, curr) => {
+      // Creando una variable temporal donde
+      // guardare el elemento anterior
+      const newVal = prev;
+      newVal[`${curr.path}Error`] = curr.message;
+      return newVal;
+    }, {});
+    // res.status(200).json({ error, project });
+    // res.status(200).json({ errorModel, error });
   } else {
     // Desestructurando datos del formulario
-    const { validData: projectData } = req;
-    // Contestando los datos del proyecti
-    res.status(200).json(projectData);
+    // const { validData: projectData } = req;
+    // Si los datos del formulario fueron validos
+    // Se asigna a project
+    project = validData;
   }
+  // Contestando los datos del proyecti
+  res.status(200).render('project/add', { project, errorModel });
 };
 
 // Exportando el Controlador
